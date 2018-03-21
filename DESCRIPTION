@@ -1,0 +1,11 @@
+Package: rCoinMarketCap
+Type: Package
+Title: R Scrapper for CoinMarketCap.com
+Version: 0.1.0
+Authors@R: person("Christoph", "Scheuch", email = "christoph.scheuch@wu.ac.at", role = c("aut", "cre"))
+Description: Simple web scrapper to extract data from the popular cryptocurrency comparison page CoinMarketCap.com
+Imports: xml2, rvest, tibble, jsonlite
+License: MIT
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
