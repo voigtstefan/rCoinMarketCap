@@ -45,3 +45,25 @@ get_ticker <- function(limit = 0) {
   out <- jsonlite::fromJSON(paste0("https://api.coinmarketcap.com/v1/ticker/?limit=", limit))
   return(as_tibble(out))
 }
+
+#' Get volume
+#' @description Get daily volume snapshots available on CoinMarketCap.com
+#' @return A tibble with all exchange names and corresponding volume data available on CoinMarketCap.com
+#' @export
+#' @importFrom jsonlite fromJSON
+#' @importFrom tibble as_tibble
+
+get_trading_volume <- function(id='bitcon') {
+    
+    url <- xml2::read_html(paste0("https://coinmarketcap.com/currencies/", id,
+                                  "/#markets"))
+    
+    out <- as.data.frame(rvest::html_table(url))
+    out <- out %>% mutate(Volume = as.numeric(gsub('%','',out$Volume....)),
+                   Price =  as.numeric(gsub('\\$','',out$Price)),
+                   Volume24h = as.numeric(gsub(",","",gsub("\\$","",Volume..24h.)))) %>%
+                   select(Source, Pair, Volume, Volume24h, Price)%>%
+            na.omit()
+       
+    return(as_tibble(out))
+}
